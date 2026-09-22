@@ -296,29 +296,27 @@ h1 {
     border-right: 0;
     border-bottom: 1px solid var(--line);
     max-height: none;
-    padding-bottom: 1rem;
+    padding: 1rem 1.25rem 0.85rem;
+    gap: 0.35rem;
   }
 
-  .lede {
-    max-width: none;
+  .lede,
+  .legend-heading,
+  .legend,
+  .credit {
+    display: none;
   }
 
-  .legend {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  h1 {
+    font-size: clamp(1.6rem, 7vw, 2.1rem);
   }
 
   .map-shell {
-    min-height: 62vh;
+    min-height: 0;
+    height: 100%;
   }
 
   .map-fade {
     background: linear-gradient(180deg, rgba(238, 243, 241, 0.5), transparent 18%);
-  }
-}
-
-@media (max-width: 560px) {
-  .legend {
-    grid-template-columns: 1fr;
   }
 }

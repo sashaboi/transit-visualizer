@@ -33,6 +33,10 @@ const COLORS = {
 const FONT_BOLD = ["Noto Sans Bold"];
 const FONT_REGULAR = ["Noto Sans Regular"];
 
+// Average of Eglinton (~39°) and Derry (~43°) geographic bearings, minus 90°
+// so both corridors read roughly horizontal on screen.
+const MAP_BEARING = -49;
+
 const map = new maplibregl.Map({
   container: "map",
   style: "https://tiles.openfreemap.org/styles/positron",
@@ -41,10 +45,13 @@ const map = new maplibregl.Map({
   minZoom: 9,
   maxZoom: 15,
   pitch: 0,
+  bearing: MAP_BEARING,
   attributionControl: true,
 });
 
-map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
+map.addControl(new maplibregl.NavigationControl({ showCompass: true }), "top-right");
+map.dragRotate.enable();
+map.touchZoomRotate.enableRotation();
 
 async function loadJson(path) {
   const res = await fetch(path);
@@ -288,9 +295,11 @@ map.on("load", async () => {
   }
   map.fitBounds(bounds, {
     padding: { top: 48, bottom: 48, left: 36, right: 48 },
+    bearing: MAP_BEARING,
     duration: 1400,
     essential: true,
   });
+  map.setBearing(MAP_BEARING);
 });
 
 document.querySelectorAll(".legend-item").forEach((btn) => {
