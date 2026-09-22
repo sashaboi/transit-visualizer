@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mississauga Transit Plan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <aside class="panel" aria-label="Plan legend">
+        <p class="eyebrow">Mississauga</p>
+        <h1>Transit Plan</h1>
+        <p class="lede">
+          Proposed LRT / BRT corridors on Dixie, Erin Mills, Derry, and Eglinton —
+          shown against today’s GO, Transitway, and Hurontario network.
+        </p>
+
+        <p class="legend-heading">Proposed</p>
+        <ul class="legend" role="list">
+          <li>
+            <button type="button" class="legend-item is-active" data-layer="dixie" aria-pressed="true">
+              <span class="swatch dixie" aria-hidden="true"></span>
+              <span>
+                <strong>Dixie LRT / BRT</strong>
+                <small>Proposed · Dixie Road corridor</small>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="legend-item is-active" data-layer="erinmills" aria-pressed="true">
+              <span class="swatch erinmills" aria-hidden="true"></span>
+              <span>
+                <strong>Erin Mills LRT / BRT</strong>
+                <small>Proposed · Erin Mills Parkway</small>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="legend-item is-active" data-layer="derry" aria-pressed="true">
+              <span class="swatch derry" aria-hidden="true"></span>
+              <span>
+                <strong>Derry LRT / BRT</strong>
+                <small>Proposed · Malton GO to Winston Churchill</small>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="legend-item is-active" data-layer="eglinton" aria-pressed="true">
+              <span class="swatch eglinton" aria-hidden="true"></span>
+              <span>
+                <strong>Eglinton LRT / BRT</strong>
+                <small>Proposed · 9th Line to Renforth</small>
+              </span>
+            </button>
+          </li>
+        </ul>
+
+        <p class="legend-heading">Existing</p>
+        <ul class="legend legend-existing" role="list">
+          <li>
+            <button type="button" class="legend-item is-active" data-layer="existing" aria-pressed="true">
+              <span class="swatch existing" aria-hidden="true"></span>
+              <span>
+                <strong>GO · Transitway · Hurontario LRT</strong>
+                <small>Context network (muted)</small>
+              </span>
+            </button>
+          </li>
+        </ul>
+
+        <p class="credit">
+          Corridor geometry · City of Mississauga open data
+        </p>
+      </aside>
+
+      <main class="map-shell">
+        <div id="map" role="application" aria-label="Mississauga transit plan map"></div>
+        <div class="map-fade" aria-hidden="true"></div>
+      </main>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
