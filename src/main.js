@@ -254,14 +254,14 @@ map.on("load", async () => {
     dixie,
     COLORS.proposed,
     "Dixie LRT / BRT",
-    `<strong>Dixie LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed rapid transit along Dixie Road, ending at Dixie GO.</div>`
+    `<strong>Dixie LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed along Dixie Road, ending on the road near Dixie GO.</div>`
   );
   addProposedCorridor(
     "erinmills",
     erinMills,
     COLORS.proposed,
     "Erin Mills LRT / BRT",
-    `<strong>Erin Mills LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed rapid transit along Erin Mills Parkway.</div>`
+    `<strong>Erin Mills LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed along Erin Mills Parkway and Southdown Road to Clarkson GO.</div>`
   );
   addProposedCorridor(
     "derry",
