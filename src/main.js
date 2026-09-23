@@ -23,10 +23,7 @@ const LAYERS = {
 };
 
 const COLORS = {
-  dixie: "#b45309",
-  erinmills: "#a16207",
-  derry: "#c2410c",
-  eglinton: "#0f766e",
+  proposed: "#ffc700", // Dipika for Mayor brand gold (--gold)
   boundary: "#13212b",
 };
 
@@ -125,7 +122,6 @@ function addProposedCorridor(id, data, color, label, popupHtml) {
       "line-color": color,
       "line-width": 6,
       "line-opacity": 1,
-      "line-dasharray": [1.6, 1.2],
     },
   });
   map.addLayer({
@@ -252,32 +248,32 @@ map.on("load", async () => {
     },
   });
 
-  // Proposed corridors — prominent
+  // Proposed corridors — brand yellow, solid
   addProposedCorridor(
     "dixie",
     dixie,
-    COLORS.dixie,
+    COLORS.proposed,
     "Dixie LRT / BRT",
-    `<strong>Dixie LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed rapid transit along Dixie Road.</div>`
+    `<strong>Dixie LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed rapid transit along Dixie Road, ending at Dixie GO.</div>`
   );
   addProposedCorridor(
     "erinmills",
     erinMills,
-    COLORS.erinmills,
+    COLORS.proposed,
     "Erin Mills LRT / BRT",
     `<strong>Erin Mills LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed rapid transit along Erin Mills Parkway.</div>`
   );
   addProposedCorridor(
     "derry",
     derry,
-    COLORS.derry,
+    COLORS.proposed,
     "Derry LRT / BRT",
     `<strong>Derry LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed · Malton GO to Winston Churchill along Derry Road.</div>`
   );
   addProposedCorridor(
     "eglinton",
     eglinton,
-    COLORS.eglinton,
+    COLORS.proposed,
     "Eglinton LRT / BRT",
     `<strong>Eglinton LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed · 9th Line to Renforth along Eglinton.</div>`
   );
