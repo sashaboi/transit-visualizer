@@ -15,13 +15,13 @@ const LAYERS = {
     "go-station-dots",
     "go-station-labels",
   ],
-  transitway: ["transitway-casing", "transitway"],
+  transitway: ["transitway-casing", "transitway", "transitway-label"],
   hurontario: ["lrt-casing", "lrt", "lrt-label"],
   dixie: ["dixie-glow", "dixie-casing", "dixie", "dixie-label"],
   erinmills: ["erinmills-glow", "erinmills-casing", "erinmills", "erinmills-label"],
   derry: ["derry-glow", "derry-casing", "derry", "derry-label"],
   eglinton: ["eglinton-glow", "eglinton-casing", "eglinton", "eglinton-label"],
-  dundas: ["dundas-glow", "dundas-casing", "dundas", "dundas-label"],
+  dundas: ["dundas-casing", "dundas", "dundas-label"],
   ecwe: ["ecwe-glow", "ecwe-casing", "ecwe", "ecwe-label", "ecwe-label-point"],
   "proposed-go": [
     "proposed-go-halo",
@@ -412,10 +412,10 @@ map.on("load", async () => {
     },
   });
 
-  // Existing network — GO navy; Transitway grey; Hazel McCallion Line solid GO navy
+  // Existing network — GO navy; Transitway GO navy; Hazel McCallion Line solid GO navy
   addCorridor("go-milton", milton, 3.5, { color: COLORS.go, label: "GO Milton" });
   addCorridor("go-lakeshore", lakeshore, 3.5, { color: COLORS.go, label: "GO Lakeshore West" });
-  addCorridor("transitway", transitway, 4);
+  addCorridor("transitway", transitway, 4, { color: COLORS.go, label: "Mississauga Transitway" });
   addCorridor("lrt", lrt, 3.5, {
     color: COLORS.hurontario,
     label: "Hazel McCallion Line",
@@ -484,13 +484,25 @@ map.on("load", async () => {
     "Eglinton LRT / BRT",
     `<strong>Eglinton LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed along Eglinton Avenue from Ridgeway Plaza to Renforth.</div>`
   );
-  addProposedCorridor(
-    "dundas",
-    dundas,
-    COLORS.proposed,
-    "Dundas BRT",
-    `<strong>Dundas BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Dundas Connects · proposed rapid transit along Dundas Street (Mississauga open data).</div>`
-  );
+  // Dundas BRT — official Dundas Connects alignment; navy like GO / Transitway / Hazel
+  addCorridor("dundas", dundas, 3.5, {
+    color: COLORS.go,
+    label: "Dundas BRT",
+  });
+  map.on("click", "dundas", (e) => {
+    new maplibregl.Popup({ offset: 12, closeButton: false })
+      .setLngLat(e.lngLat)
+      .setHTML(
+        `<strong>Dundas BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Dundas Connects · proposed rapid transit along Dundas Street (Mississauga open data).</div>`
+      )
+      .addTo(map);
+  });
+  map.on("mouseenter", "dundas", () => {
+    map.getCanvas().style.cursor = "pointer";
+  });
+  map.on("mouseleave", "dundas", () => {
+    map.getCanvas().style.cursor = "";
+  });
 
   // Metrolinx ECWE — teal dashed spur east of Renforth
   addEcweCorridor(

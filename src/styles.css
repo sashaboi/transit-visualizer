@@ -6,7 +6,7 @@
   --line: rgba(19, 33, 43, 0.12);
   --milton: #111e6b;
   --lakeshore: #111e6b;
-  --transitway: #9aa3ab;
+  --transitway: #111e6b;
   --lrt: #111e6b;
   --go: #111e6b;
   --existing: #9aa3ab;
@@ -15,7 +15,7 @@
   --erinmills: var(--proposed);
   --derry: var(--proposed);
   --eglinton: var(--proposed);
-  --dundas: var(--proposed);
+  --dundas: #111e6b;
   --ecwe: #0b7f8a;
   --hurontario: #111e6b;
   --shadow: 0 18px 50px rgba(19, 33, 43, 0.14);
@@ -197,6 +197,11 @@ h1 {
   box-shadow: 0 0 0 3px rgba(17, 30, 107, 0.28);
 }
 
+.swatch.transitway {
+  background: var(--transitway);
+  box-shadow: 0 0 0 3px rgba(17, 30, 107, 0.28);
+}
+
 .swatch.hurontario {
   background: var(--hurontario);
   box-shadow: 0 0 0 3px rgba(17, 30, 107, 0.28);
@@ -205,12 +210,16 @@ h1 {
 .swatch.dixie,
 .swatch.erinmills,
 .swatch.derry,
-.swatch.eglinton,
-.swatch.dundas {
+.swatch.eglinton {
   background: var(--proposed);
   height: 5px;
   margin-top: 0.5rem;
   box-shadow: 0 0 0 4px rgba(255, 199, 0, 0.22);
+}
+
+.swatch.dundas {
+  background: var(--dundas);
+  box-shadow: 0 0 0 3px rgba(17, 30, 107, 0.28);
 }
 
 .swatch.proposed-go {
