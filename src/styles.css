@@ -4,11 +4,11 @@
   --paper: #f2f5f3;
   --panel: rgba(246, 249, 247, 0.92);
   --line: rgba(19, 33, 43, 0.12);
-  --milton: #7eb6d9;
-  --lakeshore: #7eb6d9;
+  --milton: #111e6b;
+  --lakeshore: #111e6b;
   --transitway: #9aa3ab;
   --lrt: #c4746a;
-  --go: #7eb6d9;
+  --go: #111e6b;
   --existing: #9aa3ab;
   --proposed: #ffc700;
   --dixie: var(--proposed);
@@ -193,7 +193,7 @@ h1 {
 
 .swatch.go {
   background: var(--go);
-  box-shadow: 0 0 0 3px rgba(126, 182, 217, 0.28);
+  box-shadow: 0 0 0 3px rgba(17, 30, 107, 0.28);
 }
 
 .swatch.hurontario {

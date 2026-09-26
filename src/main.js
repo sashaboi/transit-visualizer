@@ -2,7 +2,7 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 
 const EXISTING_GREY = "#9aa3ab";
-const GO_BLUE = "#7eb6d9"; // light blue for Milton + Lakeshore West
+const GO_BLUE = "#111e6b"; // GO Milton + Lakeshore West (from brand swatch)
 
 const LAYERS = {
   go: [
