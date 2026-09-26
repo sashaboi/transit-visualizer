@@ -197,14 +197,8 @@ h1 {
 }
 
 .swatch.hurontario {
-  background: repeating-linear-gradient(
-    90deg,
-    var(--hurontario) 0 7px,
-    transparent 7px 11px
-  );
-  height: 5px;
-  margin-top: 0.5rem;
-  box-shadow: 0 0 0 4px rgba(17, 30, 107, 0.22);
+  background: var(--hurontario);
+  box-shadow: 0 0 0 3px rgba(17, 30, 107, 0.28);
 }
 
 .swatch.dixie,
