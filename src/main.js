@@ -11,15 +11,15 @@ const LAYERS = {
     "go-lakeshore",
     "transitway-casing",
     "transitway",
-    "lrt-casing",
-    "lrt",
     "go-station-dots",
     "go-station-labels",
   ],
+  hurontario: ["lrt-casing", "lrt"],
   dixie: ["dixie-glow", "dixie-casing", "dixie", "dixie-label"],
   erinmills: ["erinmills-glow", "erinmills-casing", "erinmills", "erinmills-label"],
   derry: ["derry-glow", "derry-casing", "derry", "derry-label"],
   eglinton: ["eglinton-glow", "eglinton-casing", "eglinton", "eglinton-label"],
+  ecwe: ["ecwe-glow", "ecwe-casing", "ecwe", "ecwe-label"],
 };
 
 const TERMINI_LAYERS = ["termini-halo", "termini-dot", "termini-label"];
@@ -28,6 +28,8 @@ const TERMINI_GO_NAMES = ["Dixie GO", "Clarkson GO", "Malton GO"];
 
 const COLORS = {
   proposed: "#ffc700", // Dipika for Mayor brand gold (--gold)
+  hurontario: "#c4746a", // soft muted red — distinct from grey, still behind yellow
+  ecwe: "#0b7f8a", // Metrolinx-adjacent teal
   boundary: "#13212b",
 };
 
@@ -60,7 +62,7 @@ async function loadJson(path) {
   return res.json();
 }
 
-function addCorridor(id, data, width, { dashed = false } = {}) {
+function addCorridor(id, data, width, { dashed = false, color = EXISTING_GREY } = {}) {
   map.addSource(id, { type: "geojson", data });
 
   map.addLayer({
@@ -76,7 +78,7 @@ function addCorridor(id, data, width, { dashed = false } = {}) {
   });
 
   const paint = {
-    "line-color": EXISTING_GREY,
+    "line-color": color,
     "line-width": width,
     "line-opacity": 0.7,
   };
@@ -166,6 +168,81 @@ function addProposedCorridor(id, data, color, label, popupHtml) {
   });
 }
 
+function addEcweCorridor(id, data, color, label, popupHtml) {
+  map.addSource(id, { type: "geojson", data });
+
+  map.addLayer({
+    id: `${id}-glow`,
+    type: "line",
+    source: id,
+    layout: { "line-cap": "round", "line-join": "round" },
+    paint: {
+      "line-color": color,
+      "line-width": 12,
+      "line-opacity": 0.22,
+      "line-blur": 1,
+    },
+  });
+  map.addLayer({
+    id: `${id}-casing`,
+    type: "line",
+    source: id,
+    layout: { "line-cap": "round", "line-join": "round" },
+    paint: {
+      "line-color": "#ffffff",
+      "line-width": 7,
+      "line-opacity": 0.95,
+    },
+  });
+  map.addLayer({
+    id,
+    type: "line",
+    source: id,
+    layout: { "line-cap": "round", "line-join": "round" },
+    paint: {
+      "line-color": color,
+      "line-width": 4.5,
+      "line-opacity": 0.95,
+      "line-dasharray": [1.6, 1.2],
+    },
+  });
+  map.addLayer({
+    id: `${id}-label`,
+    type: "symbol",
+    source: id,
+    layout: {
+      "symbol-placement": "line",
+      "symbol-spacing": 220,
+      "text-field": label,
+      "text-font": FONT_BOLD,
+      "text-size": 12,
+      "text-letter-spacing": 0.02,
+      "text-offset": [0, -1.0],
+      "text-max-angle": 25,
+      "text-allow-overlap": false,
+      "text-padding": 2,
+    },
+    paint: {
+      "text-color": color,
+      "text-halo-color": "rgba(255,255,255,0.97)",
+      "text-halo-width": 2.2,
+    },
+  });
+
+  map.on("click", id, (e) => {
+    new maplibregl.Popup({ offset: 12, closeButton: false })
+      .setLngLat(e.lngLat)
+      .setHTML(popupHtml)
+      .addTo(map);
+  });
+  map.on("mouseenter", id, () => {
+    map.getCanvas().style.cursor = "pointer";
+  });
+  map.on("mouseleave", id, () => {
+    map.getCanvas().style.cursor = "";
+  });
+}
+
 function syncTerminiVisibility() {
   const active = TERMINI_CORRIDORS.filter((key) =>
     document.querySelector(`.legend-item[data-layer="${key}"]`)?.classList.contains("is-active")
@@ -192,6 +269,7 @@ map.on("load", async () => {
     eglinton,
     goStations,
     termini,
+    ecwe,
   ] = await Promise.all([
     loadJson("/data/boundary.geojson"),
     loadJson("/data/lines-milton-go.geojson"),
@@ -204,6 +282,7 @@ map.on("load", async () => {
     loadJson("/data/lines-eglinton-proposed.geojson"),
     loadJson("/data/go-stations-clean.geojson"),
     loadJson("/data/corridor-termini.geojson"),
+    loadJson("/data/lines-ecwe.geojson"),
   ]);
 
   map.addSource("boundary", { type: "geojson", data: boundary });
@@ -228,11 +307,11 @@ map.on("load", async () => {
     },
   });
 
-  // Existing network — muted grey context
+  // Existing network — muted grey context; Hurontario LRT soft red + dashed
   addCorridor("go-milton", milton, 3.5);
   addCorridor("go-lakeshore", lakeshore, 3.5);
   addCorridor("transitway", transitway, 4);
-  addCorridor("lrt", lrt, 3.5, { dashed: true });
+  addCorridor("lrt", lrt, 3.5, { dashed: true, color: COLORS.hurontario });
 
   map.addSource("go-stations", { type: "geojson", data: goStations });
   map.addLayer({
@@ -296,6 +375,15 @@ map.on("load", async () => {
     COLORS.proposed,
     "Eglinton LRT / BRT",
     `<strong>Eglinton LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed along Eglinton Avenue from Ridgeway Plaza to Renforth.</div>`
+  );
+
+  // Metrolinx ECWE — teal dashed spur east of Renforth
+  addEcweCorridor(
+    "ecwe",
+    ecwe,
+    COLORS.ecwe,
+    "Eglinton Crosstown West Extension",
+    `<strong>Eglinton Crosstown West Extension</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Metrolinx · under construction east of Renforth toward Mount Dennis. Map shows a short surface corridor proxy along Eglinton Avenue West.</div>`
   );
 
   // Significant corridor endpoints only (not every GO)
