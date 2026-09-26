@@ -37,7 +37,7 @@ const TERMINI_GO_NAMES = ["Dixie GO", "Clarkson GO", "Malton GO", "Port Credit G
 const COLORS = {
   proposed: "#ffc700", // Dipika for Mayor brand gold (--gold)
   go: GO_BLUE,
-  hurontario: "#c4746a", // soft muted red — distinct from grey, still behind yellow
+  hurontario: GO_BLUE, // same navy as GO; dashed to distinguish from solid GO lines
   ecwe: "#0b7f8a", // Metrolinx-adjacent teal
   boundary: "#13212b",
 };
@@ -409,7 +409,7 @@ map.on("load", async () => {
     },
   });
 
-  // Existing network — GO light blue; Transitway grey; Hazel McCallion Line soft red dashed
+  // Existing network — GO navy; Transitway grey; Hazel McCallion Line navy dashed (ECWE dash rhythm)
   addCorridor("go-milton", milton, 3.5, { color: COLORS.go, label: "GO Milton" });
   addCorridor("go-lakeshore", lakeshore, 3.5, { color: COLORS.go, label: "GO Lakeshore West" });
   addCorridor("transitway", transitway, 4);

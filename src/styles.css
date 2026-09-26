@@ -7,7 +7,7 @@
   --milton: #111e6b;
   --lakeshore: #111e6b;
   --transitway: #9aa3ab;
-  --lrt: #c4746a;
+  --lrt: #111e6b;
   --go: #111e6b;
   --existing: #9aa3ab;
   --proposed: #ffc700;
@@ -16,7 +16,7 @@
   --derry: var(--proposed);
   --eglinton: var(--proposed);
   --ecwe: #0b7f8a;
-  --hurontario: #c4746a;
+  --hurontario: #111e6b;
   --shadow: 0 18px 50px rgba(19, 33, 43, 0.14);
   --font-display: "Syne", system-ui, sans-serif;
   --font-body: "DM Sans", system-ui, sans-serif;
@@ -204,7 +204,7 @@ h1 {
   );
   height: 5px;
   margin-top: 0.5rem;
-  box-shadow: 0 0 0 4px rgba(196, 116, 106, 0.22);
+  box-shadow: 0 0 0 4px rgba(17, 30, 107, 0.22);
 }
 
 .swatch.dixie,
