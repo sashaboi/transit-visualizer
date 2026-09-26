@@ -1,0 +1,37 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Proposed GO station",
+        "badge": "NEW",
+        "kind": "proposed-go",
+        "note": "Midway Clarkson GO \u2013 Port Credit GO on Lakeshore West"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.61321821965798,
+          43.53202636624885
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Proposed GO station",
+        "badge": "NEW",
+        "kind": "proposed-go",
+        "note": "East of Port Credit GO on Lakeshore West"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.55923244363686,
+          43.58162759638637
+        ]
+      }
+    }
+  ]
+}

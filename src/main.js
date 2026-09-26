@@ -22,6 +22,12 @@ const LAYERS = {
   derry: ["derry-glow", "derry-casing", "derry", "derry-label"],
   eglinton: ["eglinton-glow", "eglinton-casing", "eglinton", "eglinton-label"],
   ecwe: ["ecwe-glow", "ecwe-casing", "ecwe", "ecwe-label"],
+  "proposed-go": [
+    "proposed-go-halo",
+    "proposed-go-dot",
+    "proposed-go-label",
+    "proposed-go-badge",
+  ],
 };
 
 const TERMINI_LAYERS = ["termini-halo", "termini-dot", "termini-label"];
@@ -303,6 +309,7 @@ map.on("load", async () => {
     goStations,
     termini,
     ecwe,
+    proposedGo,
   ] = await Promise.all([
     loadJson("/data/boundary.geojson"),
     loadJson("/data/lines-milton-go.geojson"),
@@ -316,6 +323,7 @@ map.on("load", async () => {
     loadJson("/data/go-stations-clean.geojson"),
     loadJson("/data/corridor-termini.geojson"),
     loadJson("/data/lines-ecwe.geojson"),
+    loadJson("/data/proposed-go-stations.geojson"),
   ]);
 
   map.addSource("boundary", { type: "geojson", data: boundary });
@@ -470,6 +478,74 @@ map.on("load", async () => {
     },
   });
   syncTerminiVisibility();
+
+  // Proposed GO stations on Lakeshore West (on-rail)
+  map.addSource("proposed-go", { type: "geojson", data: proposedGo });
+  map.addLayer({
+    id: "proposed-go-halo",
+    type: "circle",
+    source: "proposed-go",
+    paint: {
+      "circle-radius": 12,
+      "circle-color": COLORS.proposed,
+      "circle-opacity": 0.45,
+    },
+  });
+  map.addLayer({
+    id: "proposed-go-dot",
+    type: "circle",
+    source: "proposed-go",
+    paint: {
+      "circle-radius": 6.5,
+      "circle-color": "#ffffff",
+      "circle-stroke-color": COLORS.proposed,
+      "circle-stroke-width": 2.4,
+      "circle-opacity": 1,
+    },
+  });
+  map.addLayer({
+    id: "proposed-go-label",
+    type: "symbol",
+    source: "proposed-go",
+    layout: {
+      "text-field": ["get", "name"],
+      "text-font": FONT_BOLD,
+      "text-size": 13,
+      "text-letter-spacing": 0.01,
+      "text-anchor": "top",
+      "text-offset": [0, 1.15],
+      "text-allow-overlap": true,
+      "text-ignore-placement": true,
+      "text-optional": false,
+    },
+    paint: {
+      "text-color": COLORS.boundary,
+      "text-halo-color": "rgba(255,255,255,0.96)",
+      "text-halo-width": 2.2,
+    },
+  });
+  map.addLayer({
+    id: "proposed-go-badge",
+    type: "symbol",
+    source: "proposed-go",
+    layout: {
+      "text-field": ["get", "badge"],
+      "text-font": FONT_BOLD,
+      "text-size": 10,
+      "text-letter-spacing": 0.12,
+      "text-transform": "uppercase",
+      "text-anchor": "bottom",
+      "text-offset": [0, -1.15],
+      "text-allow-overlap": true,
+      "text-ignore-placement": true,
+    },
+    paint: {
+      "text-color": COLORS.boundary,
+      "text-halo-color": COLORS.proposed,
+      "text-halo-width": 3.2,
+      "text-halo-blur": 0,
+    },
+  });
 
   const bounds = new maplibregl.LngLatBounds();
   for (const feature of boundary.features) {
