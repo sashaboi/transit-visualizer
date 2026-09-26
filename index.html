@@ -19,7 +19,7 @@
         <h1>Transit Plan</h1>
         <p class="lede">
           Proposed LRT / BRT corridors on Dixie, Erin Mills, Derry, and Eglinton —
-          shown against today’s GO, Transitway, and Hurontario network.
+          shown against today’s GO, Transitway, and Hazel McCallion Line.
         </p>
 
         <p class="legend-heading">Proposed</p>
@@ -78,11 +78,20 @@
         <p class="legend-heading">Existing</p>
         <ul class="legend legend-existing" role="list">
           <li>
-            <button type="button" class="legend-item is-active" data-layer="existing" aria-pressed="true">
+            <button type="button" class="legend-item is-active" data-layer="go" aria-pressed="true">
+              <span class="swatch go" aria-hidden="true"></span>
+              <span>
+                <strong>GO Transit</strong>
+                <small>Milton · Lakeshore West</small>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="legend-item is-active" data-layer="transitway" aria-pressed="true">
               <span class="swatch existing" aria-hidden="true"></span>
               <span>
-                <strong>GO · Transitway</strong>
-                <small>Context network (muted grey)</small>
+                <strong>Mississauga Transitway</strong>
+                <small>Existing BRT (muted grey)</small>
               </span>
             </button>
           </li>
@@ -90,8 +99,8 @@
             <button type="button" class="legend-item is-active" data-layer="hurontario" aria-pressed="true">
               <span class="swatch hurontario" aria-hidden="true"></span>
               <span>
-                <strong>Hurontario LRT</strong>
-                <small>Existing · dashed soft red</small>
+                <strong>Hazel McCallion Line</strong>
+                <small>Hurontario LRT · dashed soft red</small>
               </span>
             </button>
           </li>

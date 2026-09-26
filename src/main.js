@@ -2,19 +2,21 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 
 const EXISTING_GREY = "#9aa3ab";
+const GO_BLUE = "#7eb6d9"; // light blue for Milton + Lakeshore West
 
 const LAYERS = {
-  existing: [
+  go: [
     "go-milton-casing",
     "go-milton",
+    "go-milton-label",
     "go-lakeshore-casing",
     "go-lakeshore",
-    "transitway-casing",
-    "transitway",
+    "go-lakeshore-label",
     "go-station-dots",
     "go-station-labels",
   ],
-  hurontario: ["lrt-casing", "lrt"],
+  transitway: ["transitway-casing", "transitway"],
+  hurontario: ["lrt-casing", "lrt", "lrt-label"],
   dixie: ["dixie-glow", "dixie-casing", "dixie", "dixie-label"],
   erinmills: ["erinmills-glow", "erinmills-casing", "erinmills", "erinmills-label"],
   derry: ["derry-glow", "derry-casing", "derry", "derry-label"],
@@ -28,6 +30,7 @@ const TERMINI_GO_NAMES = ["Dixie GO", "Clarkson GO", "Malton GO"];
 
 const COLORS = {
   proposed: "#ffc700", // Dipika for Mayor brand gold (--gold)
+  go: GO_BLUE,
   hurontario: "#c4746a", // soft muted red — distinct from grey, still behind yellow
   ecwe: "#0b7f8a", // Metrolinx-adjacent teal
   boundary: "#13212b",
@@ -62,7 +65,7 @@ async function loadJson(path) {
   return res.json();
 }
 
-function addCorridor(id, data, width, { dashed = false, color = EXISTING_GREY } = {}) {
+function addCorridor(id, data, width, { dashed = false, color = EXISTING_GREY, label = null } = {}) {
   map.addSource(id, { type: "geojson", data });
 
   map.addLayer({
@@ -91,6 +94,31 @@ function addCorridor(id, data, width, { dashed = false, color = EXISTING_GREY } 
     layout: { "line-cap": "round", "line-join": "round" },
     paint,
   });
+
+  if (label) {
+    map.addLayer({
+      id: `${id}-label`,
+      type: "symbol",
+      source: id,
+      layout: {
+        "symbol-placement": "line",
+        "symbol-spacing": 260,
+        "text-field": label,
+        "text-font": FONT_BOLD,
+        "text-size": 12,
+        "text-letter-spacing": 0.02,
+        "text-offset": [0, -0.95],
+        "text-max-angle": 25,
+        "text-allow-overlap": false,
+        "text-padding": 2,
+      },
+      paint: {
+        "text-color": color,
+        "text-halo-color": "rgba(255,255,255,0.96)",
+        "text-halo-width": 2,
+      },
+    });
+  }
 }
 
 function addProposedCorridor(id, data, color, label, popupHtml) {
@@ -307,11 +335,15 @@ map.on("load", async () => {
     },
   });
 
-  // Existing network — muted grey context; Hurontario LRT soft red + dashed
-  addCorridor("go-milton", milton, 3.5);
-  addCorridor("go-lakeshore", lakeshore, 3.5);
+  // Existing network — GO light blue; Transitway grey; Hazel McCallion Line soft red dashed
+  addCorridor("go-milton", milton, 3.5, { color: COLORS.go, label: "GO Milton" });
+  addCorridor("go-lakeshore", lakeshore, 3.5, { color: COLORS.go, label: "GO Lakeshore West" });
   addCorridor("transitway", transitway, 4);
-  addCorridor("lrt", lrt, 3.5, { dashed: true, color: COLORS.hurontario });
+  addCorridor("lrt", lrt, 3.5, {
+    dashed: true,
+    color: COLORS.hurontario,
+    label: "Hazel McCallion Line",
+  });
 
   map.addSource("go-stations", { type: "geojson", data: goStations });
   map.addLayer({
@@ -321,9 +353,9 @@ map.on("load", async () => {
     paint: {
       "circle-radius": 3.5,
       "circle-color": "#ffffff",
-      "circle-stroke-color": EXISTING_GREY,
+      "circle-stroke-color": COLORS.go,
       "circle-stroke-width": 1.4,
-      "circle-opacity": 0.85,
+      "circle-opacity": 0.9,
     },
   });
   map.addLayer({
@@ -340,10 +372,10 @@ map.on("load", async () => {
       "text-optional": true,
     },
     paint: {
-      "text-color": EXISTING_GREY,
+      "text-color": COLORS.go,
       "text-halo-color": "rgba(255,255,255,0.9)",
       "text-halo-width": 1.2,
-      "text-opacity": 0.75,
+      "text-opacity": 0.85,
     },
   });
 
