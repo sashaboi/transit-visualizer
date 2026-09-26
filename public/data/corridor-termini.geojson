@@ -10,7 +10,10 @@
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-79.5777223479839, 43.6080382191522]
+        "coordinates": [
+          -79.5777223479839,
+          43.6080382191522
+        ]
       }
     },
     {
@@ -22,7 +25,25 @@
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-79.632442623374, 43.5119103415885]
+        "coordinates": [
+          -79.632442623374,
+          43.5119103415885
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Erin Mills & Derry",
+        "corridor": "erinmills",
+        "kind": "junction"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.7521441714858,
+          43.610046785289
+        ]
       }
     },
     {
@@ -34,7 +55,10 @@
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-79.6382340572238, 43.7051645844538]
+        "coordinates": [
+          -79.6382340572238,
+          43.7051645844538
+        ]
       }
     },
     {
@@ -46,7 +70,10 @@
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-79.7710632887025, 43.5881503310995]
+        "coordinates": [
+          -79.7710632887025,
+          43.5881503310995
+        ]
       }
     }
   ]

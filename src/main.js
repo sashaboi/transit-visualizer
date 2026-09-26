@@ -281,7 +281,7 @@ map.on("load", async () => {
     erinMills,
     COLORS.proposed,
     "Erin Mills LRT / BRT",
-    `<strong>Erin Mills LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed along Erin Mills Parkway and Southdown Road to Clarkson GO.</div>`
+    `<strong>Erin Mills LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed along Erin Mills Parkway and Southdown Road from Derry Road to Clarkson GO.</div>`
   );
   addProposedCorridor(
     "derry",
