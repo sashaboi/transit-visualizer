@@ -21,6 +21,7 @@ const LAYERS = {
   erinmills: ["erinmills-glow", "erinmills-casing", "erinmills", "erinmills-label"],
   derry: ["derry-glow", "derry-casing", "derry", "derry-label"],
   eglinton: ["eglinton-glow", "eglinton-casing", "eglinton", "eglinton-label"],
+  dundas: ["dundas-glow", "dundas-casing", "dundas", "dundas-label"],
   ecwe: ["ecwe-glow", "ecwe-casing", "ecwe", "ecwe-label", "ecwe-label-point"],
   "proposed-go": [
     "proposed-go-halo",
@@ -31,7 +32,7 @@ const LAYERS = {
 };
 
 const TERMINI_LAYERS = ["termini-halo", "termini-dot", "termini-label"];
-const TERMINI_CORRIDORS = ["dixie", "erinmills", "derry", "eglinton", "go"];
+const TERMINI_CORRIDORS = ["dixie", "erinmills", "derry", "eglinton", "dundas", "go"];
 const TERMINI_GO_NAMES = ["Dixie GO", "Clarkson GO", "Malton GO", "Port Credit GO"];
 
 const COLORS = {
@@ -367,6 +368,7 @@ map.on("load", async () => {
     erinMills,
     derry,
     eglinton,
+    dundas,
     goStations,
     termini,
     ecwe,
@@ -381,6 +383,7 @@ map.on("load", async () => {
     loadJson("/data/lines-erin-mills-proposed.geojson"),
     loadJson("/data/lines-derry-proposed.geojson"),
     loadJson("/data/lines-eglinton-proposed.geojson"),
+    loadJson("/data/lines-dundas-brt.geojson"),
     loadJson("/data/go-stations-clean.geojson"),
     loadJson("/data/corridor-termini.geojson"),
     loadJson("/data/lines-ecwe.geojson"),
@@ -480,6 +483,13 @@ map.on("load", async () => {
     COLORS.proposed,
     "Eglinton LRT / BRT",
     `<strong>Eglinton LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed along Eglinton Avenue from Ridgeway Plaza to Renforth.</div>`
+  );
+  addProposedCorridor(
+    "dundas",
+    dundas,
+    COLORS.proposed,
+    "Dundas BRT",
+    `<strong>Dundas BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Dundas Connects · proposed rapid transit along Dundas Street (Mississauga open data).</div>`
   );
 
   // Metrolinx ECWE — teal dashed spur east of Renforth
