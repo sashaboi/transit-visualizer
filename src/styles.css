@@ -320,6 +320,19 @@ body {
   line-height: 1.35;
 }
 
+.go-station-disclaimer {
+  margin: 0.15rem 1.6rem 0;
+  padding: 0 0.65rem;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: rgba(61, 79, 92, 0.72);
+  max-width: 36ch;
+}
+
+.mobile-go-disclaimer {
+  display: none;
+}
+
 .swatch.terminus {
   width: 14px;
   height: 14px;
@@ -408,6 +421,7 @@ body {
   .legend-key,
   .legend,
   .termini-note,
+  .go-station-disclaimer,
   .credit {
     display: none;
   }
@@ -476,5 +490,18 @@ body {
   .mobile-swatch.existing-navy {
     background: #111e6b;
     box-shadow: 0 0 0 2px rgba(17, 30, 107, 0.22);
+  }
+
+  .mobile-go-disclaimer {
+    display: block;
+    margin: 0.15rem 0 0;
+    max-width: 18rem;
+    font-size: 0.62rem;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: 0;
+    color: rgba(61, 79, 92, 0.78);
+    white-space: normal;
+    text-align: left;
   }
 }
