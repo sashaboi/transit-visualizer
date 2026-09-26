@@ -25,8 +25,8 @@ const LAYERS = {
 };
 
 const TERMINI_LAYERS = ["termini-halo", "termini-dot", "termini-label"];
-const TERMINI_CORRIDORS = ["dixie", "erinmills", "derry", "eglinton"];
-const TERMINI_GO_NAMES = ["Dixie GO", "Clarkson GO", "Malton GO"];
+const TERMINI_CORRIDORS = ["dixie", "erinmills", "derry", "eglinton", "go"];
+const TERMINI_GO_NAMES = ["Dixie GO", "Clarkson GO", "Malton GO", "Port Credit GO"];
 
 const COLORS = {
   proposed: "#ffc700", // Dipika for Mayor brand gold (--gold)
@@ -234,46 +234,31 @@ function addEcweCorridor(id, data, color, label, popupHtml) {
       "line-dasharray": [1.6, 1.2],
     },
   });
-
-  // Point label at line midpoint — line symbols often collide/hide at citywide zoom
-  const line = data.features?.[0]?.geometry?.coordinates || [];
-  const mid = line[Math.floor(line.length / 2)] || line[0];
-  map.addSource(`${id}-label-point`, {
-    type: "geojson",
-    data: {
-      type: "FeatureCollection",
-      features: mid
-        ? [
-            {
-              type: "Feature",
-              properties: { name: label },
-              geometry: { type: "Point", coordinates: mid },
-            },
-          ]
-        : [],
-    },
-  });
+  // Label follows the spur (line-center); allow overlap so it stays visible at citywide zoom
   map.addLayer({
     id: `${id}-label`,
     type: "symbol",
-    source: `${id}-label-point`,
+    source: id,
     layout: {
-      "text-field": ["get", "name"],
+      "symbol-placement": "line-center",
+      "text-field": label,
       "text-font": FONT_BOLD,
       "text-size": 13,
-      "text-max-width": 14,
+      "text-max-width": 16,
       "text-letter-spacing": 0.01,
-      "text-anchor": "bottom",
-      "text-offset": [0, -0.55],
+      "text-offset": [0, -0.9],
+      "text-keep-upright": true,
+      "text-max-angle": 30,
       "text-allow-overlap": true,
       "text-ignore-placement": true,
       "text-optional": false,
+      "symbol-z-order": "source",
     },
     paint: {
       "text-color": color,
       "text-halo-color": "#ffffff",
       "text-halo-width": 2.8,
-      "text-halo-blur": 0.2,
+      "text-halo-blur": 0.15,
     },
   });
 

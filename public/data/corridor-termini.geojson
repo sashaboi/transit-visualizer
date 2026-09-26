@@ -76,6 +76,18 @@
     {
       "type": "Feature",
       "properties": {
+        "name": "Port Credit GO",
+        "corridor": "go",
+        "kind": "go"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-79.5868713402201, 43.5559800838004]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "name": "Ridgeway Plaza",
         "corridor": "eglinton",
         "kind": "landmark"
