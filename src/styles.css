@@ -1,16 +1,18 @@
 :root {
-  --ink: #13212b;
+  --ink: #111;
   --ink-soft: #3d4f5c;
   --paper: #f2f5f3;
-  --panel: rgba(246, 249, 247, 0.92);
-  --line: rgba(19, 33, 43, 0.12);
+  --panel: rgba(246, 249, 247, 0.96);
+  --line: rgba(13, 30, 111, 0.12);
+  --navy: #0d1e6f;
+  --gold: #ffc700;
   --milton: #111e6b;
   --lakeshore: #111e6b;
   --transitway: #111e6b;
   --lrt: #111e6b;
   --go: #111e6b;
   --existing: #9aa3ab;
-  --proposed: #ffc700;
+  --proposed: var(--gold);
   --dixie: var(--proposed);
   --erinmills: var(--proposed);
   --derry: var(--proposed);
@@ -18,9 +20,17 @@
   --dundas: #111e6b;
   --ecwe: #0b7f8a;
   --hurontario: #111e6b;
-  --shadow: 0 18px 50px rgba(19, 33, 43, 0.14);
-  --font-display: "Syne", system-ui, sans-serif;
-  --font-body: "DM Sans", system-ui, sans-serif;
+  --shadow: 0 18px 50px rgba(13, 30, 111, 0.14);
+  --font-display: "Roca", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+}
+
+@font-face {
+  font-family: "Roca";
+  src: url("/fonts/roca-webfont.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
 }
 
 *,
@@ -56,7 +66,7 @@ body {
 .panel {
   position: relative;
   z-index: 2;
-  padding: 2rem 1.6rem 1.5rem;
+  padding: 0 0 1.5rem;
   background: var(--panel);
   backdrop-filter: blur(14px);
   border-right: 1px solid var(--line);
@@ -66,41 +76,67 @@ body {
   overflow: auto;
 }
 
+.brand-header {
+  padding: 1.35rem 1.6rem 1.15rem;
+  background:
+    linear-gradient(165deg, #0a185a 0%, var(--navy) 48%, #081034 100%);
+  color: #fff;
+  border-bottom: 4px solid var(--gold);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
 .eyebrow {
   margin: 0;
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-weight: 700;
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ecwe);
+  color: var(--gold);
   animation: rise 700ms ease both;
 }
 
-h1 {
-  margin: 0;
+.brand-header h1 {
+  margin: 0.35rem 0 0;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-size: clamp(2.1rem, 4vw, 2.85rem);
   line-height: 0.95;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
+  color: #fff;
   animation: rise 800ms ease both;
   animation-delay: 60ms;
 }
 
-.lede {
-  margin: 0.2rem 0 0.6rem;
-  color: var(--ink-soft);
-  font-size: 0.98rem;
+.brand-header .lede {
+  margin: 0.55rem 0 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.92rem;
   line-height: 1.45;
-  max-width: 34ch;
+  max-width: 36ch;
   animation: rise 850ms ease both;
   animation-delay: 100ms;
 }
 
+.legend-heading,
+.legend-key,
+.legend,
+.termini-note {
+  margin-left: 1.6rem;
+  margin-right: 1.6rem;
+}
+
+.credit {
+  margin-top: auto;
+  padding: 1rem 1.6rem 0;
+  font-size: 0.72rem;
+  color: rgba(61, 79, 92, 0.8);
+  line-height: 1.4;
+}
+
 .legend {
   list-style: none;
-  margin: 0.4rem 0 0;
+  margin: 0.4rem 1.6rem 0;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -166,13 +202,13 @@ h1 {
 }
 
 .legend-heading {
-  margin: 0.85rem 0 0.15rem;
+  margin: 0.85rem 1.6rem 0.15rem;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ink-soft);
+  color: var(--navy);
 }
 
 .legend-heading:first-of-type {
@@ -180,8 +216,8 @@ h1 {
 }
 
 .legend-key {
-  margin: 0 0 0.35rem;
-  padding: 0 0.65rem;
+  margin: 0 1.6rem 0.35rem;
+  padding: 0;
   font-size: 0.75rem;
   line-height: 1.35;
   color: var(--ink-soft);
@@ -277,7 +313,7 @@ h1 {
   grid-template-columns: 28px 1fr;
   gap: 0.75rem;
   align-items: center;
-  margin: 0.35rem 0 0;
+  margin: 0.35rem 1.6rem 0;
   padding: 0.35rem 0.65rem;
   color: var(--ink-soft);
   font-size: 0.78rem;
@@ -292,14 +328,6 @@ h1 {
   background: #fff;
   border: 2px solid var(--ink);
   box-shadow: 0 0 0 4px rgba(255, 199, 0, 0.45);
-}
-
-.credit {
-  margin-top: auto;
-  padding-top: 1rem;
-  font-size: 0.72rem;
-  color: rgba(61, 79, 92, 0.8);
-  line-height: 1.4;
 }
 
 .map-shell {
@@ -364,13 +392,18 @@ h1 {
 
   .panel {
     border-right: 0;
-    border-bottom: 1px solid var(--line);
+    border-bottom: 0;
     max-height: none;
-    padding: 1rem 1.25rem 0.85rem;
-    gap: 0.35rem;
+    padding: 0;
+    gap: 0;
   }
 
-  .lede,
+  .brand-header {
+    padding: 0.85rem 1.15rem 0.75rem;
+    border-bottom-width: 3px;
+  }
+
+  .brand-header .lede,
   .legend-heading,
   .legend-key,
   .legend,
@@ -379,8 +412,12 @@ h1 {
     display: none;
   }
 
-  h1 {
-    font-size: clamp(1.6rem, 7vw, 2.1rem);
+  .brand-header h1 {
+    font-size: clamp(1.45rem, 6.5vw, 1.95rem);
+  }
+
+  .eyebrow {
+    font-size: 0.65rem;
   }
 
   .map-shell {

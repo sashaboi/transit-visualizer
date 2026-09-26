@@ -22,7 +22,7 @@ const LAYERS = {
   derry: ["derry-glow", "derry-casing", "derry", "derry-label"],
   eglinton: ["eglinton-glow", "eglinton-casing", "eglinton", "eglinton-label"],
   dundas: ["dundas-casing", "dundas", "dundas-label"],
-  ecwe: ["ecwe-glow", "ecwe-casing", "ecwe", "ecwe-label", "ecwe-label-point"],
+  ecwe: ["ecwe-glow", "ecwe-casing", "ecwe"],
   "proposed-go": [
     "proposed-go-halo",
     "proposed-go-dot",
@@ -219,7 +219,7 @@ function addProposedCorridor(id, data, color, label, popupHtml) {
   });
 }
 
-function addEcweCorridor(id, data, color, label, popupHtml) {
+function addEcweCorridor(id, data, color, popupHtml) {
   map.addSource(id, { type: "geojson", data });
 
   map.addLayer({
@@ -255,78 +255,6 @@ function addEcweCorridor(id, data, color, label, popupHtml) {
       "line-width": 4.5,
       "line-opacity": 0.95,
       "line-dasharray": [1.6, 1.2],
-    },
-  });
-
-  // Root cause of missing labels: at citywide zoom + map bearing, a ~5 km spur is only
-  // tens of pixels long — too short for MapLibre to place a long line-center string.
-  // Keep line-center when zoomed in; add an on-geometry midpoint point label as backup.
-  map.addLayer({
-    id: `${id}-label`,
-    type: "symbol",
-    source: id,
-    minzoom: 11.2,
-    layout: {
-      "symbol-placement": "line-center",
-      "text-field": label,
-      "text-font": FONT_BOLD,
-      "text-size": 15,
-      "text-max-width": 18,
-      "text-letter-spacing": 0.01,
-      "text-offset": [0, -0.7],
-      "text-keep-upright": true,
-      "text-max-angle": 45,
-      "text-allow-overlap": true,
-      "text-ignore-placement": true,
-      "text-optional": false,
-    },
-    paint: {
-      "text-color": color,
-      "text-halo-color": "#ffffff",
-      "text-halo-width": 3.2,
-      "text-halo-blur": 0.1,
-    },
-  });
-
-  const lineCoords = data.features?.[0]?.geometry?.coordinates || [];
-  const mid = lineCoords[Math.floor(lineCoords.length / 2)];
-  map.addSource(`${id}-label-point`, {
-    type: "geojson",
-    data: {
-      type: "FeatureCollection",
-      features: mid
-        ? [
-            {
-              type: "Feature",
-              properties: { name: label },
-              geometry: { type: "Point", coordinates: mid },
-            },
-          ]
-        : [],
-    },
-  });
-  map.addLayer({
-    id: `${id}-label-point`,
-    type: "symbol",
-    source: `${id}-label-point`,
-    maxzoom: 11.25,
-    layout: {
-      "text-field": ["get", "name"],
-      "text-font": FONT_BOLD,
-      "text-size": 15,
-      "text-max-width": 14,
-      "text-letter-spacing": 0.01,
-      "text-anchor": "bottom",
-      "text-offset": [0, -0.35],
-      "text-allow-overlap": true,
-      "text-ignore-placement": true,
-      "text-optional": false,
-    },
-    paint: {
-      "text-color": color,
-      "text-halo-color": "#ffffff",
-      "text-halo-width": 3.2,
-      "text-halo-blur": 0.1,
     },
   });
 
@@ -504,12 +432,11 @@ map.on("load", async () => {
     map.getCanvas().style.cursor = "";
   });
 
-  // Metrolinx ECWE — teal dashed spur east of Renforth
+  // Metrolinx ECWE — teal dashed spur east of Renforth (line only; no on-map labels)
   addEcweCorridor(
     "ecwe",
     ecwe,
     COLORS.ecwe,
-    "Eglinton Crosstown West Extension",
     `<strong>Eglinton Crosstown West Extension</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Metrolinx · under construction east of Renforth toward Mount Dennis. Map shows a short surface corridor proxy along Eglinton Avenue West.</div>`
   );
 
