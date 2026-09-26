@@ -16,12 +16,12 @@ const LAYERS = {
     "go-station-labels",
   ],
   transitway: ["transitway-casing", "transitway"],
-  hurontario: ["lrt-casing", "lrt", "lrt-label"],
+  hurontario: ["lrt-glow", "lrt-casing", "lrt", "lrt-label"],
   dixie: ["dixie-glow", "dixie-casing", "dixie", "dixie-label"],
   erinmills: ["erinmills-glow", "erinmills-casing", "erinmills", "erinmills-label"],
   derry: ["derry-glow", "derry-casing", "derry", "derry-label"],
   eglinton: ["eglinton-glow", "eglinton-casing", "eglinton", "eglinton-label"],
-  ecwe: ["ecwe-glow", "ecwe-casing", "ecwe", "ecwe-label"],
+  ecwe: ["ecwe-glow", "ecwe-casing", "ecwe", "ecwe-label", "ecwe-label-point"],
   "proposed-go": [
     "proposed-go-halo",
     "proposed-go-dot",
@@ -74,6 +74,22 @@ async function loadJson(path) {
 function addCorridor(id, data, width, { dashed = false, color = EXISTING_GREY, label = null } = {}) {
   map.addSource(id, { type: "geojson", data });
 
+  if (dashed) {
+    // Match ECWE dashed rhythm: glow + white casing + dasharray [1.6, 1.2]
+    map.addLayer({
+      id: `${id}-glow`,
+      type: "line",
+      source: id,
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: {
+        "line-color": color,
+        "line-width": 12,
+        "line-opacity": 0.22,
+        "line-blur": 1,
+      },
+    });
+  }
+
   map.addLayer({
     id: `${id}-casing`,
     type: "line",
@@ -81,17 +97,17 @@ function addCorridor(id, data, width, { dashed = false, color = EXISTING_GREY, l
     layout: { "line-cap": "round", "line-join": "round" },
     paint: {
       "line-color": "#ffffff",
-      "line-width": width + 3,
-      "line-opacity": 0.55,
+      "line-width": dashed ? 7 : width + 3,
+      "line-opacity": dashed ? 0.95 : 0.55,
     },
   });
 
   const paint = {
     "line-color": color,
-    "line-width": width,
-    "line-opacity": 0.7,
+    "line-width": dashed ? 4.5 : width,
+    "line-opacity": dashed ? 0.95 : 0.7,
   };
-  if (dashed) paint["line-dasharray"] = [1.2, 1.1];
+  if (dashed) paint["line-dasharray"] = [1.6, 1.2];
 
   map.addLayer({
     id,
@@ -240,31 +256,76 @@ function addEcweCorridor(id, data, color, label, popupHtml) {
       "line-dasharray": [1.6, 1.2],
     },
   });
-  // Label follows the spur (line-center); allow overlap so it stays visible at citywide zoom
+
+  // Root cause of missing labels: at citywide zoom + map bearing, a ~5 km spur is only
+  // tens of pixels long — too short for MapLibre to place a long line-center string.
+  // Keep line-center when zoomed in; add an on-geometry midpoint point label as backup.
   map.addLayer({
     id: `${id}-label`,
     type: "symbol",
     source: id,
+    minzoom: 11.2,
     layout: {
       "symbol-placement": "line-center",
       "text-field": label,
       "text-font": FONT_BOLD,
-      "text-size": 13,
-      "text-max-width": 16,
+      "text-size": 15,
+      "text-max-width": 18,
       "text-letter-spacing": 0.01,
-      "text-offset": [0, -0.9],
+      "text-offset": [0, -0.7],
       "text-keep-upright": true,
-      "text-max-angle": 30,
+      "text-max-angle": 45,
       "text-allow-overlap": true,
       "text-ignore-placement": true,
       "text-optional": false,
-      "symbol-z-order": "source",
     },
     paint: {
       "text-color": color,
       "text-halo-color": "#ffffff",
-      "text-halo-width": 2.8,
-      "text-halo-blur": 0.15,
+      "text-halo-width": 3.2,
+      "text-halo-blur": 0.1,
+    },
+  });
+
+  const lineCoords = data.features?.[0]?.geometry?.coordinates || [];
+  const mid = lineCoords[Math.floor(lineCoords.length / 2)];
+  map.addSource(`${id}-label-point`, {
+    type: "geojson",
+    data: {
+      type: "FeatureCollection",
+      features: mid
+        ? [
+            {
+              type: "Feature",
+              properties: { name: label },
+              geometry: { type: "Point", coordinates: mid },
+            },
+          ]
+        : [],
+    },
+  });
+  map.addLayer({
+    id: `${id}-label-point`,
+    type: "symbol",
+    source: `${id}-label-point`,
+    maxzoom: 11.25,
+    layout: {
+      "text-field": ["get", "name"],
+      "text-font": FONT_BOLD,
+      "text-size": 15,
+      "text-max-width": 14,
+      "text-letter-spacing": 0.01,
+      "text-anchor": "bottom",
+      "text-offset": [0, -0.35],
+      "text-allow-overlap": true,
+      "text-ignore-placement": true,
+      "text-optional": false,
+    },
+    paint: {
+      "text-color": color,
+      "text-halo-color": "#ffffff",
+      "text-halo-width": 3.2,
+      "text-halo-blur": 0.1,
     },
   });
 
