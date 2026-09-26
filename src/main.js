@@ -234,26 +234,46 @@ function addEcweCorridor(id, data, color, label, popupHtml) {
       "line-dasharray": [1.6, 1.2],
     },
   });
+
+  // Point label at line midpoint — line symbols often collide/hide at citywide zoom
+  const line = data.features?.[0]?.geometry?.coordinates || [];
+  const mid = line[Math.floor(line.length / 2)] || line[0];
+  map.addSource(`${id}-label-point`, {
+    type: "geojson",
+    data: {
+      type: "FeatureCollection",
+      features: mid
+        ? [
+            {
+              type: "Feature",
+              properties: { name: label },
+              geometry: { type: "Point", coordinates: mid },
+            },
+          ]
+        : [],
+    },
+  });
   map.addLayer({
     id: `${id}-label`,
     type: "symbol",
-    source: id,
+    source: `${id}-label-point`,
     layout: {
-      "symbol-placement": "line",
-      "symbol-spacing": 220,
-      "text-field": label,
+      "text-field": ["get", "name"],
       "text-font": FONT_BOLD,
-      "text-size": 12,
-      "text-letter-spacing": 0.02,
-      "text-offset": [0, -1.0],
-      "text-max-angle": 25,
-      "text-allow-overlap": false,
-      "text-padding": 2,
+      "text-size": 13,
+      "text-max-width": 14,
+      "text-letter-spacing": 0.01,
+      "text-anchor": "bottom",
+      "text-offset": [0, -0.55],
+      "text-allow-overlap": true,
+      "text-ignore-placement": true,
+      "text-optional": false,
     },
     paint: {
       "text-color": color,
-      "text-halo-color": "rgba(255,255,255,0.97)",
-      "text-halo-width": 2.2,
+      "text-halo-color": "#ffffff",
+      "text-halo-width": 2.8,
+      "text-halo-blur": 0.2,
     },
   });
 
