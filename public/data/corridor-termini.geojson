@@ -1,0 +1,53 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dixie GO",
+        "corridor": "dixie",
+        "kind": "go"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-79.5777223479839, 43.6080382191522]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Clarkson GO",
+        "corridor": "erinmills",
+        "kind": "go"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-79.632442623374, 43.5119103415885]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Malton GO",
+        "corridor": "derry",
+        "kind": "go"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-79.6382340572238, 43.7051645844538]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Winston Churchill",
+        "corridor": "derry",
+        "kind": "junction"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-79.7710632887025, 43.5881503310995]
+      }
+    }
+  ]
+}

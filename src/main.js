@@ -22,6 +22,10 @@ const LAYERS = {
   eglinton: ["eglinton-glow", "eglinton-casing", "eglinton", "eglinton-label"],
 };
 
+const TERMINI_LAYERS = ["termini-halo", "termini-dot", "termini-label"];
+const TERMINI_CORRIDORS = ["dixie", "erinmills", "derry"];
+const TERMINI_GO_NAMES = ["Dixie GO", "Clarkson GO", "Malton GO"];
+
 const COLORS = {
   proposed: "#ffc700", // Dipika for Mayor brand gold (--gold)
   boundary: "#13212b",
@@ -162,6 +166,19 @@ function addProposedCorridor(id, data, color, label, popupHtml) {
   });
 }
 
+function syncTerminiVisibility() {
+  const active = TERMINI_CORRIDORS.filter((key) =>
+    document.querySelector(`.legend-item[data-layer="${key}"]`)?.classList.contains("is-active")
+  );
+  const filter =
+    active.length === 0
+      ? ["==", ["get", "corridor"], "__none__"]
+      : ["in", ["get", "corridor"], ["literal", active]];
+  for (const id of TERMINI_LAYERS) {
+    if (map.getLayer(id)) map.setFilter(id, filter);
+  }
+}
+
 map.on("load", async () => {
   const [
     boundary,
@@ -174,6 +191,7 @@ map.on("load", async () => {
     derry,
     eglinton,
     goStations,
+    termini,
   ] = await Promise.all([
     loadJson("/data/boundary.geojson"),
     loadJson("/data/lines-milton-go.geojson"),
@@ -185,6 +203,7 @@ map.on("load", async () => {
     loadJson("/data/lines-derry-proposed.geojson"),
     loadJson("/data/lines-eglinton-proposed.geojson"),
     loadJson("/data/go-stations-clean.geojson"),
+    loadJson("/data/corridor-termini.geojson"),
   ]);
 
   map.addSource("boundary", { type: "geojson", data: boundary });
@@ -232,6 +251,7 @@ map.on("load", async () => {
     id: "go-station-labels",
     type: "symbol",
     source: "go-stations",
+    filter: ["!", ["in", ["get", "name"], ["literal", TERMINI_GO_NAMES]]],
     layout: {
       "text-field": ["get", "name"],
       "text-font": FONT_REGULAR,
@@ -278,6 +298,54 @@ map.on("load", async () => {
     `<strong>Eglinton LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed · 9th Line to Renforth along Eglinton.</div>`
   );
 
+  // Significant corridor endpoints only (not every GO)
+  map.addSource("corridor-termini", { type: "geojson", data: termini });
+  map.addLayer({
+    id: "termini-halo",
+    type: "circle",
+    source: "corridor-termini",
+    paint: {
+      "circle-radius": 11,
+      "circle-color": COLORS.proposed,
+      "circle-opacity": 0.4,
+    },
+  });
+  map.addLayer({
+    id: "termini-dot",
+    type: "circle",
+    source: "corridor-termini",
+    paint: {
+      "circle-radius": 6.5,
+      "circle-color": "#ffffff",
+      "circle-stroke-color": COLORS.boundary,
+      "circle-stroke-width": 2.2,
+      "circle-opacity": 1,
+    },
+  });
+  map.addLayer({
+    id: "termini-label",
+    type: "symbol",
+    source: "corridor-termini",
+    layout: {
+      "text-field": ["get", "name"],
+      "text-font": FONT_BOLD,
+      "text-size": 13,
+      "text-letter-spacing": 0.01,
+      "text-variable-anchor": ["top", "bottom", "left", "right"],
+      "text-radial-offset": 1.15,
+      "text-justify": "auto",
+      "text-optional": false,
+      "text-allow-overlap": true,
+      "text-padding": 4,
+    },
+    paint: {
+      "text-color": COLORS.boundary,
+      "text-halo-color": "rgba(255,255,255,0.96)",
+      "text-halo-width": 2.2,
+    },
+  });
+  syncTerminiVisibility();
+
   const bounds = new maplibregl.LngLatBounds();
   for (const feature of boundary.features) {
     const geom = feature.geometry;
@@ -308,5 +376,6 @@ document.querySelectorAll(".legend-item").forEach((btn) => {
     for (const id of LAYERS[key] || []) {
       if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", visibility);
     }
+    if (TERMINI_CORRIDORS.includes(key)) syncTerminiVisibility();
   });
 });
