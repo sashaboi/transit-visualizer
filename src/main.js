@@ -72,12 +72,7 @@ async function loadJson(path) {
   return res.json();
 }
 
-function addCorridor(
-  id,
-  data,
-  width,
-  { dashed = false, color = EXISTING_GREY, label = null, prominent = false } = {}
-) {
+function addCorridor(id, data, width, { dashed = false, color = EXISTING_GREY, label = null } = {}) {
   map.addSource(id, { type: "geojson", data });
 
   if (dashed) {
@@ -103,15 +98,15 @@ function addCorridor(
     layout: { "line-cap": "round", "line-join": "round" },
     paint: {
       "line-color": "#ffffff",
-      "line-width": dashed ? 7 : prominent ? width + 5 : width + 3,
-      "line-opacity": dashed || prominent ? 0.95 : 0.55,
+      "line-width": dashed ? 7 : width + 3,
+      "line-opacity": dashed ? 0.95 : 0.55,
     },
   });
 
   const paint = {
     "line-color": color,
     "line-width": dashed ? 4.5 : width,
-    "line-opacity": dashed || prominent ? 0.95 : 0.7,
+    "line-opacity": dashed ? 0.95 : 0.7,
   };
   if (dashed) paint["line-dasharray"] = [1.6, 1.2];
 
@@ -348,12 +343,7 @@ map.on("load", async () => {
   // Existing network — GO navy; Transitway GO navy; Hazel McCallion Line solid GO navy
   addCorridor("go-milton", milton, 3.5, { color: COLORS.go, label: "GO Milton" });
   addCorridor("go-lakeshore", lakeshore, 3.5, { color: COLORS.go, label: "GO Lakeshore West" });
-  // Heavier stroke + opaque white casing so navy reads through Eglinton/ECWE overlap
-  addCorridor("transitway", transitway, 5.25, {
-    color: COLORS.go,
-    label: "Mississauga Transitway",
-    prominent: true,
-  });
+  addCorridor("transitway", transitway, 4, { color: COLORS.go, label: "Mississauga Transitway" });
   addCorridor("lrt", lrt, 3.5, {
     color: COLORS.hurontario,
     label: "Hazel McCallion Line",
@@ -449,11 +439,6 @@ map.on("load", async () => {
     COLORS.ecwe,
     `<strong>Eglinton Crosstown West Extension</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Metrolinx · under construction east of Renforth toward Mount Dennis. Map shows a short surface corridor proxy along Eglinton Avenue West.</div>`
   );
-
-  // Draw Transitway above overlapping Eglinton / ECWE near Renforth (termini added next stay on top)
-  for (const layerId of LAYERS.transitway) {
-    if (map.getLayer(layerId)) map.moveLayer(layerId);
-  }
 
   // Significant corridor endpoints only (not every GO)
   map.addSource("corridor-termini", { type: "geojson", data: termini });
