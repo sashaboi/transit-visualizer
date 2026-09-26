@@ -10,10 +10,7 @@
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -79.5777223479839,
-          43.6080382191522
-        ]
+        "coordinates": [-79.5777223479839, 43.6080382191522]
       }
     },
     {
@@ -25,10 +22,7 @@
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -79.6742858050704,
-          43.6752320999792
-        ]
+        "coordinates": [-79.6742858050704, 43.6752320999792]
       }
     },
     {
@@ -40,10 +34,7 @@
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -79.632442623374,
-          43.5119103415885
-        ]
+        "coordinates": [-79.632442623374, 43.5119103415885]
       }
     },
     {
@@ -55,10 +46,7 @@
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -79.7521441714858,
-          43.610046785289
-        ]
+        "coordinates": [-79.7521441714858, 43.610046785289]
       }
     },
     {
@@ -70,10 +58,7 @@
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -79.6382340572238,
-          43.7051645844538
-        ]
+        "coordinates": [-79.6382340572238, 43.7051645844538]
       }
     },
     {
@@ -85,10 +70,31 @@
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -79.7710632887025,
-          43.5881503310995
-        ]
+        "coordinates": [-79.7710632887025, 43.5881503310995]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ridgeway Plaza",
+        "corridor": "eglinton",
+        "kind": "landmark"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-79.7275004, 43.5374544]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Renforth",
+        "corridor": "eglinton",
+        "kind": "landmark"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-79.5900043, 43.6650821]
       }
     }
   ]

@@ -23,7 +23,7 @@ const LAYERS = {
 };
 
 const TERMINI_LAYERS = ["termini-halo", "termini-dot", "termini-label"];
-const TERMINI_CORRIDORS = ["dixie", "erinmills", "derry"];
+const TERMINI_CORRIDORS = ["dixie", "erinmills", "derry", "eglinton"];
 const TERMINI_GO_NAMES = ["Dixie GO", "Clarkson GO", "Malton GO"];
 
 const COLORS = {
@@ -295,7 +295,7 @@ map.on("load", async () => {
     eglinton,
     COLORS.proposed,
     "Eglinton LRT / BRT",
-    `<strong>Eglinton LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed · 9th Line to Renforth along Eglinton.</div>`
+    `<strong>Eglinton LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed along Eglinton Avenue from Ridgeway Plaza to Renforth.</div>`
   );
 
   // Significant corridor endpoints only (not every GO)
