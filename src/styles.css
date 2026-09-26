@@ -322,6 +322,11 @@ h1 {
   z-index: 1;
 }
 
+/* Desktop: hide compact lake legend (full panel legend is enough) */
+.mobile-map-legend {
+  display: none;
+}
+
 .maplibregl-popup-content {
   font-family: var(--font-body);
   padding: 0.7rem 0.85rem;
@@ -385,5 +390,54 @@ h1 {
 
   .map-fade {
     background: linear-gradient(180deg, rgba(238, 243, 241, 0.5), transparent 18%);
+  }
+
+  /* Compact key over Lake Ontario (south water) — avoid covering the city */
+  .mobile-map-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    bottom: max(1.1rem, env(safe-area-inset-bottom, 0px) + 0.75rem);
+    transform: translateX(-50%);
+    padding: 0.45rem 0.7rem;
+    border-radius: 10px;
+    background: rgba(246, 249, 247, 0.88);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(19, 33, 43, 0.1);
+    box-shadow: 0 8px 24px rgba(19, 33, 43, 0.12);
+    pointer-events: none;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .mobile-map-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    white-space: nowrap;
+  }
+
+  .mobile-swatch {
+    width: 1.05rem;
+    height: 0.35rem;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+
+  .mobile-swatch.new {
+    background: #ffc700;
+    box-shadow: 0 0 0 2px rgba(255, 199, 0, 0.3);
+  }
+
+  .mobile-swatch.existing-navy {
+    background: #111e6b;
+    box-shadow: 0 0 0 2px rgba(17, 30, 107, 0.22);
   }
 }
