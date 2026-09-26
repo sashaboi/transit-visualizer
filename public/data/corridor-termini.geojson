@@ -19,6 +19,21 @@
     {
       "type": "Feature",
       "properties": {
+        "name": "Dixie & Derry",
+        "corridor": "dixie",
+        "kind": "junction"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.6742858050704,
+          43.6752320999792
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "name": "Clarkson GO",
         "corridor": "erinmills",
         "kind": "go"

@@ -274,7 +274,7 @@ map.on("load", async () => {
     dixie,
     COLORS.proposed,
     "Dixie LRT / BRT",
-    `<strong>Dixie LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed along Dixie Road, ending on the road near Dixie GO.</div>`
+    `<strong>Dixie LRT / BRT</strong><div style="margin-top:4px;font-size:12px;color:#3d4f5c">Proposed along Dixie Road from Derry Road to Dixie GO (on-road).</div>`
   );
   addProposedCorridor(
     "erinmills",
