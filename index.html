@@ -18,18 +18,19 @@
         <p class="eyebrow">Mississauga</p>
         <h1>Transit Plan</h1>
         <p class="lede">
-          Proposed LRT / BRT corridors on Dixie, Erin Mills, Derry, and Eglinton —
-          shown against today’s GO, Transitway, and Hazel McCallion Line.
+          Yellow marks new transit proposals; navy marks existing and committed
+          corridors already serving Mississauga.
         </p>
 
-        <p class="legend-heading">Proposed</p>
-        <ul class="legend" role="list">
+        <p class="legend-heading">New transit</p>
+        <p class="legend-key legend-key-new">Yellow · proposed LRT / BRT and new GO stops</p>
+        <ul class="legend legend-new" role="list">
           <li>
             <button type="button" class="legend-item is-active" data-layer="dixie" aria-pressed="true">
               <span class="swatch dixie" aria-hidden="true"></span>
               <span>
                 <strong>Dixie LRT / BRT</strong>
-                <small>Proposed · Derry Rd to Dixie GO</small>
+                <small>Derry Rd to Dixie GO</small>
               </span>
             </button>
           </li>
@@ -38,7 +39,7 @@
               <span class="swatch erinmills" aria-hidden="true"></span>
               <span>
                 <strong>Erin Mills LRT / BRT</strong>
-                <small>Proposed · Derry Rd to Clarkson GO</small>
+                <small>Derry Rd to Clarkson GO</small>
               </span>
             </button>
           </li>
@@ -47,7 +48,7 @@
               <span class="swatch derry" aria-hidden="true"></span>
               <span>
                 <strong>Derry LRT / BRT</strong>
-                <small>Proposed · Malton GO to Winston Churchill</small>
+                <small>Malton GO to Winston Churchill</small>
               </span>
             </button>
           </li>
@@ -56,16 +57,7 @@
               <span class="swatch eglinton" aria-hidden="true"></span>
               <span>
                 <strong>Eglinton LRT / BRT</strong>
-                <small>Proposed · Ridgeway Plaza to Renforth</small>
-              </span>
-            </button>
-          </li>
-          <li>
-            <button type="button" class="legend-item is-active" data-layer="dundas" aria-pressed="true">
-              <span class="swatch dundas" aria-hidden="true"></span>
-              <span>
-                <strong>Dundas BRT</strong>
-                <small>Dundas Connects · GO navy</small>
+                <small>Ridgeway Plaza to Renforth</small>
               </span>
             </button>
           </li>
@@ -80,20 +72,8 @@
           </li>
         </ul>
 
-        <p class="legend-heading">Metrolinx</p>
-        <ul class="legend" role="list">
-          <li>
-            <button type="button" class="legend-item is-active" data-layer="ecwe" aria-pressed="true">
-              <span class="swatch ecwe" aria-hidden="true"></span>
-              <span>
-                <strong>Eglinton Crosstown West Extension</strong>
-                <small>Under construction · east of Renforth</small>
-              </span>
-            </button>
-          </li>
-        </ul>
-
-        <p class="legend-heading">Existing</p>
+        <p class="legend-heading">Existing transit</p>
+        <p class="legend-key legend-key-existing">Navy · GO, LRT, Transitway, and Dundas BRT</p>
         <ul class="legend legend-existing" role="list">
           <li>
             <button type="button" class="legend-item is-active" data-layer="go" aria-pressed="true">
@@ -106,10 +86,10 @@
           </li>
           <li>
             <button type="button" class="legend-item is-active" data-layer="transitway" aria-pressed="true">
-              <span class="swatch go" aria-hidden="true"></span>
+              <span class="swatch transitway" aria-hidden="true"></span>
               <span>
                 <strong>Mississauga Transitway</strong>
-                <small>Existing BRT · GO navy</small>
+                <small>Existing BRT</small>
               </span>
             </button>
           </li>
@@ -118,7 +98,25 @@
               <span class="swatch hurontario" aria-hidden="true"></span>
               <span>
                 <strong>Hazel McCallion Line</strong>
-                <small>Hurontario LRT · solid GO navy</small>
+                <small>Hurontario LRT</small>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="legend-item is-active" data-layer="dundas" aria-pressed="true">
+              <span class="swatch dundas" aria-hidden="true"></span>
+              <span>
+                <strong>Dundas BRT</strong>
+                <small>Dundas Connects · Oakville to Toronto</small>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="legend-item is-active" data-layer="ecwe" aria-pressed="true">
+              <span class="swatch ecwe" aria-hidden="true"></span>
+              <span>
+                <strong>Eglinton Crosstown West Extension</strong>
+                <small>Metrolinx · under construction (teal)</small>
               </span>
             </button>
           </li>
