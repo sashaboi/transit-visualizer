@@ -32,7 +32,7 @@ const LAYERS = {
 };
 
 const TERMINI_LAYERS = ["termini-halo", "termini-dot", "termini-label"];
-const TERMINI_CORRIDORS = ["dixie", "erinmills", "derry", "eglinton", "dundas", "go"];
+const TERMINI_CORRIDORS = ["dixie", "erinmills", "derry", "eglinton", "go"];
 const TERMINI_GO_NAMES = ["Dixie GO", "Clarkson GO", "Malton GO", "Port Credit GO"];
 
 const COLORS = {

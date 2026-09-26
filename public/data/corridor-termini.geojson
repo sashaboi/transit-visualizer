@@ -108,30 +108,6 @@
         "type": "Point",
         "coordinates": [-79.5900043, 43.6650821]
       }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Toward Oakville",
-        "corridor": "dundas",
-        "kind": "junction"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-79.6988634912624, 43.5066515712377]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Toward Toronto",
-        "corridor": "dundas",
-        "kind": "junction"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-79.5646285781297, 43.6267612118639]
-      }
     }
   ]
 }
